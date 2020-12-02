@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<title>Fedback***</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<script src="w3data.js"></script>
+<link rel="stylesheet" href="font-awesome.min.css">
+<style>
+    /* Full-width input fields */
+
+    input[type=text],
+    input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    /* Set a style for log in  button */
+
+    button {
+        background-color: #ed2210;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+
+    }
+
+    /* Center the box and position for the log in page */
+
+    .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+        position: relative;
+    }
+
+    .container {
+        padding: 16px;
+    }
+
+
+
+    /* The Modal (background) */
+
+    .modal {
+        display: block;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* full width */
+        height: 100%;
+        /* full height */
+        overflow: auto;
+        /* enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* black w/ opacity */
+        padding-top: 60px;
+    }
+
+    /* Modal (background) Content/Box log in page */
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto;
+        /* 5% from the top, 15% from the bottom and centered */
+        border: 1px solid #888;
+        width: 80%;
+        /* Could be more or less, depending on screen size */
+    }
+
+</style>
+
+<body>
+    <div id="loginForm" class="modal">
+        <div class="modal-content animate">
+            <div class="container">
+                <label><b>Student ID</b></label>
+                <input type="text" placeholder="Enter Your ID" name="uname" id="studentId" required>
+                <p id="errorPane" class="w3-text-red" style="display:none">Incorrect Student ID</p>
+                <button id="loginButton" style="width:100%;" type="button" onClick="setStudentId()">Enter</button>
+            </div>
+            <div class="container" style="background-color:#f1f1f1">
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Main form -->
+    <div class="w3-container w3-card-4 w3-light-grey w3-text-black w3-margin" style="display:none" id="mainForm">
+        <div class="w3-container w3-red w3-center">
+            <h1>Feedback</h1>
+        </div>
+
+        <!-- Eye contact criteria -->
+        <div class="w3-display-container w3-padding-32 w3-margin w3-border-top">
+            <div class="w3-display-topmiddle"><label class="w3-validate"><b>Eye contact</b></label> </div>
+            <div class="w3-center">
+                <div class="w3-bar ">
+                    <button class="w3-button w3-black w3-round-large w3-hover-red" value="1" onClick="sendFeedback('updatePace',this.value)">Bad</button>
+                    <button class="w3-button w3-blue-grey w3-round-large w3-hover-red" value="2" onClick="sendFeedback('updatePace',this.value)">Regular</button>
+                    <button class="w3-button w3-teal w3-round-large w3-hover-red" value="3" onClick="sendFeedback('updatePace',this.value)">Good</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confidence criteria -->
+        <div class="w3-display-container w3-padding-32 w3-border-top w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"><b>Confidence </b></label> </div>
+            <div class="w3-center">
+                <div class="w3-bar ">
+                    <button class="w3-button w3-black w3-round-large w3-hover-red" value="1" onClick="sendFeedback('updateVolume',this.value)">Low</button>
+                    <button class="w3-button w3-blue-grey w3-round-large w3-hover-red" value="2" onClick="sendFeedback('updateVolume',this.value)">Good</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approperiate Formal language criteria -->
+        <div class="w3-display-container w3-padding-32 w3-border-top w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"><b>Formal language</b></label> </div>
+            <div class="w3-center">
+                <div class="w3-bar">
+                    <button class="w3-button w3-black w3-round-large w3-hover-red" value="1" onClick="sendFeedback('updateBodyLanguage',this.value)">Informal</button>
+                    <button class="w3-button w3-blue-grey w3-round-large w3-hover-red" value="2" onClick="sendFeedback('updateBodyLanguage',this.value)">Formal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- material used in the lecture criteria -->
+        <div class="w3-display-container w3-padding-64 w3-border-top w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"><b>Slides or material <br> used in the lecture</b></label> </div>
+            <div class="w3-center">
+                <div class="w3-bar">
+                    <button class="w3-button  w3-dark-grey w3-round-large w3-hover-red" value="1" onClick="sendFeedback('updateClarity',this.value)">Bad</button>
+                    <button class="w3-button w3-teal w3-round-large w3-hover-red" value="2" onClick="sendFeedback('updateClarity',this.value)">Good</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Understanding of the lecture criteria -->
+        <div class="w3-display-container w3-padding-64 w3-border-top w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"><b>Understanding of the lecture</b></label> </div>
+            <div class="w3-center">
+                <div class="w3-bar">
+                    <button class="w3-button w3-dark-grey w3-round-large w3-hover-red" value="1" onClick="sendFeedback('updateInterest',this.value)">Bad</button>
+                    <button class="w3-button w3-teal w3-round-large w3-hover-red" value="2" onClick="sendFeedback('updateInterest',this.value)">Good</button>
+                </div>
+            </div>
+        </div>
+        <!-- button results -->
+        <div class="w3-display-container w3-padding-32 w3-border-top w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"></label> </div>
+            <div class="w3-display-middle">
+                <a href="http://192.168.0.102:8080/google_glass_web/feedbackViewer.html">Check results</a>
+            </div>
+        </div>
+
+        <!-- display succes message -->
+        <div id="loadingModal" class="w3-modal" style="display:hidden">
+            <i id="spinner" class="fa fa-spinner w3-spin w3-display-middle" style="font-size:74px"></i>
+            <div id="alertPane" class="w3-panel w3-animate-opacity w3-display-middle" style="display:none">
+                <h1 class="w3-text-shadow w3-text-red fa fa-check w3-xxlarge">Success!</h1>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        function showAlertPane(metric) {
+            var alertPane = document.getElementById('alertPane');
+            alertPane.style.display = "block";
+            setTimeout(hideAlertPane, 2000);
+        }
+
+        function hideAlertPane() {
+            document.getElementById('loadingModal').style.display = "none";
+            var alertPane = document.getElementById('alertPane');
+            alertPane.style.display = "none";
+        }
+
+        function parseMetricValue(value) {
+            return value; // values form 1 to 3
+        }
+
+        function sendFeedback(metric, value) {
+
+            studentId = document.getElementById('studentId').value;
+            document.getElementById('loadingModal').style.display = "block";
+            document.getElementById('spinner').style.display = "block";
+
+            w3Http("service/" + metric + "?studentId=" + studentId + "&value=" + parseMetricValue(value), function() {
+
+                if (this.readyState == 4 && (this.status == 200 || this.status == 204)) {
+                    document.getElementById('spinner').style.display = "none";
+                    showAlertPane(metric);
+                }
+            });
+        }
+
+        function setStudentId() {
+            var studentId = document.getElementById('studentId').value.trim();
+
+            if ("" != studentId) {
+                document.getElementById("loginButton").innerHTML = "Loading...";
+                w3Http("service/register?studentId=" + studentId, function() {
+
+                    if (this.readyState == 4 && (this.status == 200 || this.status == 204)) {
+                        if (this.responseText.includes("success")) {
+                            document.getElementById("loginButton").innerHTML = "Enter";
+                            document.getElementById("errorPane").style.display = "none";
+                            document.getElementById('loginForm').style.display = 'none';
+                            document.getElementById('mainForm').style.display = 'block';
+                        } else {
+                            document.getElementById("loginButton").innerHTML = "Enter";
+                            document.getElementById("errorPane").style.display = "block";
+                        }
+                    }
+                });
+            }
+        }
+
+        function exit() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('mainForm').style.display = 'none';
+        }
+
+        function runSurvey() {
+            var studentId = document.getElementById('studentId').value;
+            var url = "https://docs.google.com/forms/d/e/1FAIpQLScKBjj7xU8j5dHzjJcrYB-uA52gw1AZmPid_GndIjjdH-9LBA/viewform?entry.2095739304=" + studentId;
+            window.open(url, "_self")
+        }
+
+        function registerStudent(studentId) {
+
+            studentId = document.getElementById('studentId').value;
+            document.getElementById('loadingModal').style.display = "block";
+
+            w3Http("service/registerStudent?studentId=" + studentId, function() {
+
+                if (this.readyState == 4 && (this.status == 200 || this.status == 204)) {
+                    alert(this.responseText);
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>

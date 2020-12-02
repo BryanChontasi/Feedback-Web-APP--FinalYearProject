@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<title>Fedback***</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<script src="w3data.js"></script>
+<link rel="stylesheet" href="font-awesome.min.css">
+<style>
+    /* Full-width input fields */
+
+    input[type=text],
+    input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    /* Set a style for log in  button */
+
+    button {
+        background-color: #ed2210;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    /* Center the box and position for the log in page */
+
+    .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+        position: relative;
+    }
+
+
+    .container {
+        padding: 16px;
+    }
+
+
+    /* The Modal (background) */
+
+    .modal {
+        display: block;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+        padding-top: 60px;
+    }
+
+    /* Modal (background) Content/Box log in page */
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto;
+        /* 5% from the top, 15% from the bottom and centered */
+        border: 1px solid #888;
+        width: 80%;
+        /* Could be more or less, depending on screen size */
+    }
+
+    /* Stars Style*/
+
+    .rating {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%) rotateY(180deg);
+        display: flex;
+    }
+
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        display: block;
+        cursor: pointer;
+    }
+
+    .rating label:before {
+        content: '\f005';
+        font-family: fontAwesome;
+        position: relative;
+        display: block;
+        font-size: 20px;
+        color: #97a0a8;
+        width: 25px;
+    }
+
+    .rating label:after {
+        content: '\f005';
+        font-family: fontAwesome;
+        position: absolute;
+        display: block;
+        font-size: 20px;
+        color: #ed2210;
+        top: 0;
+        opacity: 0;
+        transition: .5s;
+        width: 25px;
+        transition: .5s;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+    }
+
+    .rating label:hover:after,
+    .rating label:hover~label:after,
+    .rating input:checked~label:after {
+        opacity: 1;
+    }
+
+    .textLeft {
+        float: left;
+        width: 49%;
+        margin-right: 2%;
+        text-align: center;
+    }
+
+    .textRight {
+        float: right;
+        width: 49%;
+        text-align: center;
+    }
+
+</style>
+
+<body>
+    <!-- Log in form -->
+    <div id="loginForm" class="modal">
+        <div class="modal-content animate">
+            <div class="container">
+                <label><b>Student ID</b></label>
+                <input type="text" placeholder="Enter Your ID" name="uname" id="studentId" required>
+                <p id="errorPane" class="w3-text-red" style="display:none">Incorrect Student ID</p>
+                <button id="loginButton" type="button" onClick="setStudentId()">Enter</button>
+            </div>
+            <div class="container" style="background-color:#f1f1f1">
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Main form -->
+    <div class="w3-container w3-card-4 w3-light-grey w3-text-black w3-margin" style="display:none" id="mainForm">
+        <div class="w3-container w3-red w3-center">
+            <h1>Feedback</h1>
+        </div>
+
+        <!-- Eye contact criteria -->
+        <div class="w3-display-container w3-padding-64 w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"><b>Eye contact</b></label> </div>
+            <div class="w3-display-left">Low</div>
+            <div class="w3-display-right">Good</div>
+            <div class="w3-display-middle">
+                <div class="rating">
+                    <input type="radio" name="pace" id="star1" value="1" onChange="sendFeedback('updatePace',this.value)">
+                    <label for="star1"></label>
+                    <input type="radio" name="pace" id="star2" value="2" onChange="sendFeedback('updatePace',this.value)">
+                    <label for="star2"></label>
+                    <input type="radio" name="pace" id="star3" value="3" onChange="sendFeedback('updatePace',this.value)">
+                    <label for="star3"></label>
+                    <input type="radio" name="pace" id="star4" value="4" onChange="sendFeedback('updatePace',this.value)">
+                    <label for="star4"></label>
+                    <input type="radio" name="pace" id="star5" value="5" onChange="sendFeedback('updatePace',this.value)">
+                    <label for="star5"></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confidence criteria -->
+        <div class="w3-display-container w3-padding-64 w3-border-top w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"><b>Confidence </b></label> </div>
+            <div class="w3-display-left">Low</div>
+            <div class="w3-display-right">High</div>
+            <div class="w3-display-middle">
+                <div class="rating">
+                    <input type="radio" name="volum" id="volum1" value="1" onChange="sendFeedback('updateVolume',this.value)">
+                    <label for="volum1"></label>
+                    <input type="radio" name="volum" id="volum2" value="2" onChange="sendFeedback('updateVolume',this.value)">
+                    <label for="volum2"></label>
+                    <input type="radio" name="volum" id="volum3" value="3" onChange="sendFeedback('updateVolume',this.value)">
+                    <label for="volum3"></label>
+                    <input type="radio" name="volum" id="volum4" value="4" onChange="sendFeedback('updateVolume',this.value)">
+                    <label for="volum4"></label>
+                    <input type="radio" name="volum" id="volum5" value="5" onChange="sendFeedback('updateVolume',this.value)">
+                    <label for="volum5"></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approperiate Formal language criteria -->
+        <div class="w3-display-container w3-padding-64 w3-border-top w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"><b>Formal language </b></label> </div>
+            <div class="w3-display-left">Informal</div>
+            <div class="w3-display-right">Formal</div>
+            <div class="w3-display-middle">
+                <div class="rating">
+                    <input type="radio" name="blanguage" id="blanguage1" value="1" onChange="sendFeedback('updateBodyLanguage',this.value)">
+                    <label for="blanguage1"></label>
+                    <input type="radio" name="blanguage" id="blanguage2" value="2" onChange="sendFeedback('updateBodyLanguage',this.value)">
+                    <label for="blanguage2"></label>
+                    <input type="radio" name="blanguage" id="blanguage3" value="3" onChange="sendFeedback('updateBodyLanguage',this.value)">
+                    <label for="blanguage3"></label>
+                    <input type="radio" name="blanguage" id="blanguage4" value="4" onChange="sendFeedback('updateBodyLanguage',this.value)">
+                    <label for="blanguage4"></label>
+                    <input type="radio" name="blanguage" id="blanguage5" value="5" onChange="sendFeedback('updateBodyLanguage',this.value)">
+                    <label for="blanguage5"></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- material used in the lecture criteria -->
+        <div class="w3-display-container w3-padding-64  w3-border-top w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"><b>Material used in <br> the lecture </b></label> </div>
+            <div class="w3-display-left">Bad</div>
+            <div class="w3-display-right">Good</div>
+            <div class="w3-display-middle">
+                <div class="rating">
+                    <input type="radio" name="clarity" id="clarity1" value="1" onChange="sendFeedback('updateClarity',this.value)">
+                    <label for="clarity1"></label>
+                    <input type="radio" name="clarity" id="clarity2" value="2" onChange="sendFeedback('updateClarity',this.value)">
+                    <label for="clarity2"></label>
+                    <input type="radio" name="clarity" id="clarity3" value="3" onChange="sendFeedback('updateClarity',this.value)">
+                    <label for="clarity3"></label>
+                    <input type="radio" name="clarity" id="clarity4" value="4" onChange="sendFeedback('updateClarity',this.value)">
+                    <label for="clarity4"></label>
+                    <input type="radio" name="clarity" id="clarity5" value="5" onChange="sendFeedback('updateClarity',this.value)">
+                    <label for="clarity5"></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Understanding of the lecture criteria -->
+        <div class="w3-display-container w3-padding-64 w3-border-top w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"><b>Understanding of the lecture</b></label> </div>
+            <div class="w3-display-left">Bad</div>
+            <div class="w3-display-right">Good</div>
+            <div class="w3-display-middle">
+                <div class="rating">
+                    <input type="radio" name="interest" id="interest1" value="1" onChange="sendFeedback('updateInterest',this.value)">
+                    <label for="interest1"></label>
+                    <input type="radio" name="interest" id="interest2" value="2" onChange="sendFeedback('updateInterest',this.value)">
+                    <label for="interest2"></label>
+                    <input type="radio" name="interest" id="interest3" value="3" onChange="sendFeedback('updateInterest',this.value)">
+                    <label for="interest3"></label>
+                    <input type="radio" name="interest" id="interest4" value="4" onChange="sendFeedback('updateInterest',this.value)">
+                    <label for="interest4"></label>
+                    <input type="radio" name="interest" id="interest5" value="5" onChange="sendFeedback('updateInterest',this.value)">
+                    <label for="interest5"></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- button results -->
+        <div class="w3-display-container w3-padding-32 w3-border-top w3-margin">
+            <div class="w3-display-topmiddle"><label class="w3-validate"></label> </div>
+            <div class="w3-display-middle">
+                <a href="http://192.168.0.102:8080/google_glass_web/feedbackViewer.html">Check results</a>
+            </div>
+        </div>
+
+        <!-- display succes message -->
+        <div id="loadingModal" class="w3-modal" style="display:hidden">
+            <i id="spinner" class="fa fa-spinner w3-spin w3-display-middle" style="font-size:74px"></i>
+            <div id="alertPane" class="w3-panel w3-animate-opacity w3-display-middle" style="display:none">
+                <h1 class="w3-text-shadow w3-text-red fa fa-check w3-xxlarge">Success!</h1>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showAlertPane(metric) {
+            var alertPane = document.getElementById('alertPane');
+            alertPane.style.display = "block";
+            setTimeout(hideAlertPane, 2000);
+        }
+
+
+        function hideAlertPane() {
+            document.getElementById('loadingModal').style.display = "none";
+            var alertPane = document.getElementById('alertPane');
+            alertPane.style.display = "none";
+        }
+
+
+        function parseMetricValue(value) {
+            return value; //?1:-1;
+        }
+
+        function sendFeedback(metric, value) {
+            studentId = document.getElementById('studentId').value;
+            document.getElementById('loadingModal').style.display = "block";
+            document.getElementById('spinner').style.display = "block";
+            w3Http("service/" + metric + "?studentId=" + studentId + "&value=" + parseMetricValue(value), function() {
+                if (this.readyState == 4 && (this.status == 200 || this.status == 204)) {
+                    document.getElementById('spinner').style.display = "none";
+                    showAlertPane(metric);
+                }
+            });
+        }
+
+        function setStudentId() {
+            var studentId = document.getElementById('studentId').value.trim();
+
+            if ("" != studentId) {
+                document.getElementById("loginButton").innerHTML = "Loading...";
+                w3Http("service/register?studentId=" + studentId, function() {
+
+                    if (this.readyState == 4 && (this.status == 200 || this.status == 204)) {
+                        if (this.responseText.includes("success")) {
+                            document.getElementById("loginButton").innerHTML = "Enter";
+                            document.getElementById("errorPane").style.display = "none";
+                            document.getElementById('loginForm').style.display = 'none';
+                            document.getElementById('mainForm').style.display = 'block';
+                        } else {
+                            document.getElementById("loginButton").innerHTML = "Enter";
+                            document.getElementById("errorPane").style.display = "block";
+                        }
+                    }
+                });
+            }
+        }
+
+        function exit() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('mainForm').style.display = 'none';
+        }
+
+        function runSurvey() {
+            var studentId = document.getElementById('studentId').value;
+            var url = "https://docs.google.com/forms/d/e/1FAIpQLScKBjj7xU8j5dHzjJcrYB-uA52gw1AZmPid_GndIjjdH-9LBA/viewform?entry.2095739304=" + studentId;
+            window.open(url, "_self")
+        }
+
+        function registerStudent(studentId) {
+
+            studentId = document.getElementById('studentId').value;
+            document.getElementById('loadingModal').style.display = "block";
+
+            w3Http("service/registerStudent?studentId=" + studentId, function() {
+
+                if (this.readyState == 4 && (this.status == 200 || this.status == 204)) {
+                    alert(this.responseText);
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>
